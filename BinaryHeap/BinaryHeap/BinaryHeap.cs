@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -18,8 +19,21 @@ namespace BinaryHeap
         
         public BinaryHeap()
         {
-            _capacity = 4;
             _items = new T[_capacity];
+            _comparer = Comparer<T>.Default;
+        }
+
+        public BinaryHeap(T[] array)
+        {
+            _items = array;
+            Count = _items.Length;
+            _comparer = Comparer<T>.Default;
+            while (_capacity < _items.Length)
+                _capacity *= 2;
+            for (int i = _items.Length / 2 - 1; i >= 0; i--)
+            {
+                Heapify(i);
+            }
         }
 
         private int Parent(int index)
@@ -57,6 +71,16 @@ namespace BinaryHeap
             _items[largest] = _items[index];
             _items[index] = temp;
             Heapify(largest);
+        }
+
+        public T[] GetHeap()
+        {
+            return _items;
+        }
+
+        public void HeapSort()
+        {
+            
         }
 
         public T Peek()
