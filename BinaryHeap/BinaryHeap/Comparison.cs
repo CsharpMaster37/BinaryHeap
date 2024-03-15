@@ -6,15 +6,20 @@ using System.Threading.Tasks;
 
 namespace BinaryHeap
 {
-    public class ComparisonHeap
+    public class MaxHeap<T> : IComparer<T>
     {
-        public int MinHeap(int x, int y)
+        private IComparer<T> defaultComparer = Comparer<T>.Default;
+        public int Compare(T x, T y)
         {
-            return x - y;
+            return defaultComparer.Compare(x, y);
         }
-        public int MaxHeap(int x, int y)
+    }
+    public class MinHeap<T> : IComparer<T>
+    {
+        private IComparer<T> defaultComparer = Comparer<T>.Default;
+        public int Compare(T x, T y)
         {
-            return y - x;
+            return defaultComparer.Compare(y, x);
         }
     }
 }

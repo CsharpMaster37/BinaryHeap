@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BinaryHeap
 {
@@ -23,17 +16,41 @@ namespace BinaryHeap
             _comparer = Comparer<T>.Default;
         }
 
-        public BinaryHeap(T[] array)
+        public BinaryHeap(T[] array, IComparer<T> comparer)
         {
-            _items = array;
-            Count = _items.Length;
-            _comparer = Comparer<T>.Default;
-            while (_capacity < _items.Length)
+            Count = array.Length;
+            while (_capacity < Count)
                 _capacity *= 2;
+            _comparer = comparer;
+            _items = new T[_capacity];
+            Array.Copy(array, 0, _items, 0, Count);
             for (int i = _items.Length / 2 - 1; i >= 0; i--)
             {
                 Heapify(i);
             }
+        }
+
+        public T Pop()
+        {
+            if (Count == 0)
+                throw new InvalidOperationException("Heap is empty.");
+
+            T maxItem = _items[0];
+            _items[0] = _items[Count - 1];
+            Count--;
+            Heapify(0);
+            return maxItem;
+        }
+
+
+
+        public void Insert(T item)
+        {
+            if (Count == _capacity)
+                IncrementCapacity();
+            Count++;
+            _items[Count-1] = item;
+            Heapify(Parent(Count - 1));
         }
 
         private int Parent(int index)
@@ -56,6 +73,12 @@ namespace BinaryHeap
             throw new NotImplementedException();
         }
 
+        public T[] GetHeap()
+        {
+            T[] returnvalues = new T[Count];
+            Array.Copy(_items, 0, returnvalues, 0, Count);
+            return returnvalues;
+        }
         public void Heapify(int index)
         {
             int left = LeftChild(index);
@@ -67,20 +90,24 @@ namespace BinaryHeap
             { largest = right; }
 
             if (largest == index) return;
-            var temp = _items[largest];
-            _items[largest] = _items[index];
-            _items[index] = temp;
+            Swap(largest, index);
             Heapify(largest);
         }
-
-        public T[] GetHeap()
-        {
-            return _items;
-        }
-
         public void HeapSort()
         {
-            
+            for (int i = Count - 1; i >= 0; i--)
+            {
+                Swap(0, i);
+                Count--;
+                Heapify(0);
+            }
+        }
+
+        private void Swap(int index1, int index2)
+        {
+            T temp = _items[index1];
+            _items[index1] = _items[index2];
+            _items[index2] = temp;
         }
 
         public T Peek()
