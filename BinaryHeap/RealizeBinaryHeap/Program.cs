@@ -7,52 +7,21 @@ namespace RealizeBinaryHeap
     internal class Program
     {
         public static Stopwatch sw = new Stopwatch();
-        public static void PyramidSort(int[] arr)
+        public static void PyramidSortWithRecursive(int[] arr)
         {
             BinaryHeap<int> heap = new BinaryHeap<int>(arr, new MinHeap<int>());
             for (int i = 0; i < arr.Length; i++)
             {
-                arr[i] = heap.Pop();
+                arr[i] = heap.PopWithRecursive();
             }
         }
-
-        //метод возвращающий индекс опорного элемента
-        static void QuickSort(int[] A, int p, int r)
+        public static void PyramidSortWithoutRecursive(int[] arr)
         {
-            if (p < r)
+            BinaryHeap<int> heap = new BinaryHeap<int>(arr, new MinHeap<int>());
+            for (int i = 0; i < arr.Length; i++)
             {
-                int q = Partition(A, p, r);
-                QuickSort(A, p, q - 1);
-                QuickSort(A, q + 1, r);
+                arr[i] = heap.PopWithoutRecursive();
             }
-        }
-
-        static int Partition(int[] A, int p, int r)
-        {
-            int x = A[r];
-            int i = p - 1;
-            for (int j = p; j <= r - 1; j++)
-            {
-                if (A[j] <= x)
-                {
-                    i++;
-                    Swap(ref A[i], ref A[j]);
-                }
-            }
-            Swap(ref A[i + 1], ref A[r]);
-            return i + 1;
-        }
-
-        static void Swap(ref int a, ref int b)
-        {
-            int temp = a;
-            a = b;
-            b = temp;
-        }
-
-        static void QuickSort(int[] array)
-        {
-            QuickSort(array, 0, array.Length - 1);
         }
 
         public static void TestSortedArray(Action<int[]> methodSort)
@@ -72,7 +41,7 @@ namespace RealizeBinaryHeap
             int[] arr = new int[10000];
             for (int i = 9999; i >=0; i--)
             {
-                arr[i] = i;
+                arr[i] = 9999-i;
             }
             sw.Restart();
             methodSort.Invoke(arr);
@@ -99,16 +68,16 @@ namespace RealizeBinaryHeap
         static void Main(string[] args)
         {
             Console.WriteLine("Sorted:");
-            TestSortedArray(PyramidSort);
-            TestSortedArray(QuickSort);
+            TestSortedArray(PyramidSortWithRecursive);
+            TestSortedArray(PyramidSortWithoutRecursive);
             Console.WriteLine("__________________________________");
             Console.WriteLine("Not Sorted:");
-            TestNotSortedArray(PyramidSort);
-            TestNotSortedArray(QuickSort);
+            TestNotSortedArray(PyramidSortWithRecursive);
+            TestNotSortedArray(PyramidSortWithoutRecursive);
             Console.WriteLine("__________________________________");
             Console.WriteLine("Half Sorted:");
-            TestHalfSortedArray(PyramidSort);
-            TestHalfSortedArray(QuickSort);
+            TestHalfSortedArray(PyramidSortWithRecursive);
+            TestHalfSortedArray(PyramidSortWithoutRecursive);
             Console.WriteLine("__________________________________");
         }
     }

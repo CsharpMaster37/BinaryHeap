@@ -30,7 +30,7 @@ namespace BinaryHeap
             }
         }
 
-        public T Pop()
+        public T PopWithRecursive()
         {
             if (Count == 0)
                 throw new InvalidOperationException("Heap is empty.");
@@ -39,6 +39,18 @@ namespace BinaryHeap
             _items[0] = _items[Count - 1];
             Count--;
             Heapify(0);
+            return maxItem;
+        }
+
+        public T PopWithoutRecursive()
+        {
+            if (Count == 0)
+                throw new InvalidOperationException("Heap is empty.");
+
+            T maxItem = _items[0];
+            _items[0] = _items[Count - 1];
+            Count--;
+            HeapifyNonRecursive(0);
             return maxItem;
         }
 
@@ -88,18 +100,26 @@ namespace BinaryHeap
             { largest = left; }
             if (right < Count && _comparer.Compare(_items[right], _items[largest]) > 0)
             { largest = right; }
-
-            if (largest == index) return;
+            if (largest == index) 
+                return;
             Swap(largest, index);
             Heapify(largest);
         }
-        public void HeapSort()
+        private void HeapifyNonRecursive(int index)
         {
-            for (int i = Count - 1; i >= 0; i--)
+            while (true)
             {
-                Swap(0, i);
-                Count--;
-                Heapify(0);
+                int left = LeftChild(index);
+                int right = RightChild(index);
+                int largest = index;
+                if (left < Count && _comparer.Compare(_items[left], _items[index]) > 0)
+                    largest = left;
+                if (right < Count && _comparer.Compare(_items[right], _items[largest]) > 0)
+                    largest = right;
+                if (largest == index)
+                    return;
+                Swap(largest, index);
+                index = largest;
             }
         }
 
