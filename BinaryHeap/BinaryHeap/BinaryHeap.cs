@@ -61,8 +61,13 @@ namespace BinaryHeap
             if (Count == _capacity)
                 IncrementCapacity();
             Count++;
-            _items[Count-1] = item;
-            Heapify(Parent(Count - 1));
+            _items[Count - 1] = item;
+            int parentTemp = Count - 1;
+            do
+            {
+                parentTemp = Parent(parentTemp);
+                Heapify(parentTemp);
+            } while (parentTemp != 0);
         }
 
         private int Parent(int index)

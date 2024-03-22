@@ -45,7 +45,7 @@ namespace BinaryHeapTests
         {
             int[] arr = new int[5] { 1, 2, 3, 4, 5 };
             BinaryHeap<int> heap = new BinaryHeap<int>(arr, new MaxHeap<int>());
-            Assert.AreEqual(5, heap.Pop());
+            Assert.AreEqual(5, heap.PopWithoutRecursive());
 
 
         }
@@ -54,7 +54,7 @@ namespace BinaryHeapTests
         {
             int[] arr = new int[5] { 1, 2, 3, 4, 5 };
             BinaryHeap<int> heap = new BinaryHeap<int>(arr, new MaxHeap<int>());
-            heap.Pop();
+            heap.PopWithoutRecursive();
             Assert.AreEqual(4, heap.Count);
         }
         [TestMethod]
@@ -76,7 +76,7 @@ namespace BinaryHeapTests
             BinaryHeap<int> heap = new BinaryHeap<int>(arr, new MinHeap<int>());
             for (int i = 0; i < 1000; i++)
             {
-                arr[i] = heap.Pop();
+                arr[i] = heap.PopWithoutRecursive();
             }
             int[] sortedarr = new int[1000];
             for (int i = 0; i < 1000; i++)

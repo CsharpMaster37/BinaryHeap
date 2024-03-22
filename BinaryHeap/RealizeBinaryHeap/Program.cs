@@ -67,18 +67,28 @@ namespace RealizeBinaryHeap
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Sorted:");
-            TestSortedArray(PyramidSortWithRecursive);
-            TestSortedArray(PyramidSortWithoutRecursive);
-            Console.WriteLine("__________________________________");
-            Console.WriteLine("Not Sorted:");
-            TestNotSortedArray(PyramidSortWithRecursive);
-            TestNotSortedArray(PyramidSortWithoutRecursive);
-            Console.WriteLine("__________________________________");
-            Console.WriteLine("Half Sorted:");
-            TestHalfSortedArray(PyramidSortWithRecursive);
-            TestHalfSortedArray(PyramidSortWithoutRecursive);
-            Console.WriteLine("__________________________________");
+            //Console.WriteLine("Sorted:");
+            //TestSortedArray(PyramidSortWithRecursive);
+            //TestSortedArray(PyramidSortWithoutRecursive);
+            //Console.WriteLine("__________________________________");
+            //Console.WriteLine("Not Sorted:");
+            //TestNotSortedArray(PyramidSortWithRecursive);
+            //TestNotSortedArray(PyramidSortWithoutRecursive);
+            //Console.WriteLine("__________________________________");
+            //Console.WriteLine("Half Sorted:");
+            //TestHalfSortedArray(PyramidSortWithRecursive);
+            //TestHalfSortedArray(PyramidSortWithoutRecursive);
+            //Console.WriteLine("__________________________________");
+            int[] arr = new int[4] { 9,11,16,34 };
+            BinaryHeap<int> heap = new BinaryHeap<int>();
+            for (int i = 0; i < 4; i++)
+            {
+                heap.Insert(arr[i]);
+            }
+            for (int i = 0; i < 9; i++)
+            {
+                Console.WriteLine(heap.PopWithoutRecursive());
+            }
         }
     }
 }
